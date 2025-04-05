@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Lista de tarefas</title>
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+    <ul>
+        {% for task in tasks %}
+            <li>{{ task.title }} - Criada em {{ task.created_at }} - Status: {{ task.status }}</li>
+            {% empty %}
+                <li>Nenhuma tarefa encontrada.</li>
+            {% endfor %}
+            <form method="POST" action="{% url 'tasks:update' task.id %}">
+                {% csrf_token %}
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="Pendente" {% if task.status == 'Pendente' %}selected{% endif %}>Pendente</option>
+                    <option value="Concluída" {% if task.status == 'Concluída' %}selected{% endif %}>Concluída</option>
+                </select>
+                <button type="submit">Atualizar</button>
+        {% endfor %}
+    </ul>
+
+    <h2>Adicionar nova tarefa</h2>
+    <form method="POST" action="{% url 'tasks:create' %}">
+        {% csrf_token %}
+        <label for="title">Título:</label>
+        <input type="text" id="title" name="title" required>
+        <br>
+        <label for="description">Descrição:</label>
+        <textarea id="description" name="description" required></textarea>
+        <br>
+        <button type="submit">Adicionar</button>
+    </form>
+</body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+</html>

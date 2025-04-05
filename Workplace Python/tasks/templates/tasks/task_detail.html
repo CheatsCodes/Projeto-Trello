@@ -1,0 +1,32 @@
+{% extends 'base.html' %}  <-- Tag corrigida!
+
+{% block content %}
+<div class="task-detail">
+    <h1>{{ task.title }}</h1>
+    <p>{{ task.description }}</p>
+
+    <div class="comments-section">
+        <h3>Comentários</h3>
+        
+        {% for comment in comments %}
+            <div class="comment">
+                <strong>{{ comment.author.username }}</strong>
+                <small>{{ comment.created_at|date:"d/m/Y H:i" }}</small>
+                <p>{{ comment.text }}</p>
+            </div>
+        {% empty %}
+            <p>Nenhum comentário ainda.</p>
+        {% endfor %}
+        
+        {% if user.is_authenticated %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Enviar</button>
+            </form>
+        {% else %}
+            <p>Faça login para comentar.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

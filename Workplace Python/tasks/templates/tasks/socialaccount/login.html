@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="social-login">
+    <h2>Entrar com</h2>
+    <a href="{% provider_login_url 'google' %}" class="btn-google">
+        <i class="fab fa-google"></i> Google
+    </a>
+    <a href="{% provider_login_url 'github' %}" class="btn-github">
+        <i class="fab fa-github"></i> GitHub
+    </a>
+</div>
+{% endblock %}
